@@ -4,8 +4,12 @@ declare(strict_types=1);
 namespace ManoCode\CustomExtend\Extend;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
 use ManoCode\CustomExtend\Traits\CanImportDict;
 use ManoCode\CustomExtend\Traits\CanImportMenu;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Slowlyo\OwlAdmin\Admin;
 use Slowlyo\OwlAdmin\Events\ExtensionChanged;
 use Slowlyo\OwlAdmin\Extend\ServiceProvider;
 
@@ -19,6 +23,52 @@ class ManoCodeServiceProvider extends ServiceProvider
     protected $menu = [];
     protected $dict = [];
 
+    /**
+     * 获取API路由地址
+     * @return string|null
+     * @throws \Exception
+     */
+    public function getApiRoutes(): ?string
+    {
+        $path = $this->path('src/Http/api_routes.php');
+
+        return is_file($path) ? $path : null;
+    }
+    /**
+     * 注册API路由.
+     *
+     * @param $callback
+     */
+    public function registerApiRoutes($callback): void
+    {
+        Route::group(array_filter([
+            'domain'     => Admin::config('admin.route.domain'),
+            'prefix'     => Admin::config('admin.route.prefix'),
+            'middleware' => Admin::config('admin.route.middleware'),
+        ]),
+            $callback);
+    }
+
+    /**
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws \ReflectionException
+     * @throws \Exception
+     */
+    public function initRoutes()
+    {
+        if ($this->disabled()) {
+            return;
+        }
+
+        if ($routes = $this->getRoutes()) {
+            $this->registerRoutes($routes);
+        }
+        if ($routes = $this->getApiRoutes()) {
+            include_once($routes);
+        }
+    }
     /**
      * 监听扩展注册事件
      * @return void

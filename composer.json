@@ -24,7 +24,6 @@
         }
     },
     "extra": {
-        "owl-admin": "ManoCode\\Page\\PageServiceProvider",
         "laravel": {
             "providers": [
                 "ManoCode\\Page\\PageServiceProvider"
