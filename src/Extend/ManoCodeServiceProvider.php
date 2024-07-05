@@ -88,6 +88,7 @@ class ManoCodeServiceProvider extends ServiceProvider
                 if (method_exists($this, 'refreshDict')) {
                     $this->refreshDict();
                 }
+                $this->runMigrations();
             } else if ($event->name === $this->getName() && $event->type == 'disable') {
                 // 删除菜单
                 if (method_exists($this, 'flushMenu')) {
@@ -106,6 +107,7 @@ class ManoCodeServiceProvider extends ServiceProvider
                 if (method_exists($this, 'refreshDict')) {
                     $this->refreshDict();
                 }
+                $this->runMigrations();
             } else if ($event->name === $this->getName() && $event->type == 'uninstall') {
                 // 删除菜单
                 if (method_exists($this, 'flushMenu')) {
