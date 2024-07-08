@@ -36,18 +36,25 @@ class DemoServiceProvider extends ManoCodeServiceProvider
         [
             'key' => 'filesystem.driver',
             'value' => '文件系统驱动',
-            'parent' => '',
-        ],
-        [
-            'parent' => 'filesystem.driver',
-            'key' => 'local',
-            'value' => '本地存储'
-        ],
-        [
-            'parent' => 'filesystem.driver',
-            'key' => 'kodo',
-            'value' => '七牛云kodo'
-        ],
+            'keys' => [
+                [
+                    'key' => 'local',
+                    'value' => '本地存储'
+                ],
+                [
+                    'key' => 'kodo',
+                    'value' => '七牛云kodo'
+                ],
+                [
+                    'key' => 'cos',
+                    'value' => '腾讯云COS'
+                ],
+                [
+                    'key' => 'oss',
+                    'value' => '阿里云OSS'
+                ]
+            ]
+        ]
     ];
 	public function settingForm()
 	{
