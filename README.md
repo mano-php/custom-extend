@@ -1,15 +1,36 @@
 ### 中继owl-admin、增加自定义组件
 
-#### 1. docker 开发
-
+##### 安装本扩展
 ```bash
-    # 发布配置文件
-    php artisan publish:docker
-    # 运行服务
-    docker-compose up -d
+composer require mano-code/custom-extend
 ```
 
-#### 2. 使用 示例 `ManoCodeServiceProvider`
+#### 1. 为了方便初学者避免遇到php 扩展以及配置问题，推荐使用docker-compose 作为环境编排。`运行环境需要安装docker`
+
+>  a. 发布配置
+```bash
+php artisan publish:docker
+```
+>
+>  b. 启动环境
+```bash
+docker-compose up -d
+``` 
+> 
+>  如需进入docker 环境内 运行环境，调试命令 请使用  即可进入容器内终端
+```bash
+docker-compose exec api bash
+```
+> 
+>  如需修改访问端口 则在 项目目录下的 docker-compose.yml内修改 services->nginx->ports 的 8000 为你要使用的端口，默认端口为 ：localhost:8000/admin
+
+
+#### 2. 为了解决字典自动加载，以及扩展更新时 新增的Migration文件。使用\ManoCode\CustomExtend\Extend\ManoCodeServiceProvider作为基础服务提供者即可解决。具体使用方式参考如下
+
+>
+>  并且将扩展依赖加入到自己扩展的composer.json->require内。版本要求为：*
+>
+>  在自己扩展内的 src/XxxxServiceProvider.php内 修改继承类 为 ManoCodeServiceProvider 如下所示。
 
 ```php
 <?php
@@ -63,7 +84,13 @@ class DemoServiceProvider extends ManoCodeServiceProvider
 }
 ```
 
-#### 3. 定义API路由 在扩展下 创建 src/Http/api_routes.php
+#### 3. 如需定义api 直接提供给外部使用，或者自定义鉴权机制的 则可以在 扩展目录下的src/Http/api_routes.php 定义路由。此文件默认不存在 需要自己创建。
+
+> 新建路由文件 src/Http/api_routes.php
+>
+> 写入自己的路由 如下所示
+> 
+> 本路由可以使用 /demo 直接访问，与 `admin_api` 无关
 
 ```php
 <?php
