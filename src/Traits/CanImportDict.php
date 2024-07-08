@@ -15,7 +15,6 @@ trait CanImportDict
 {
 
     protected array $dictValidationRules = [
-        'parent' => 'nullable',
         'key' => 'required',
         'value' => 'required',
     ];
@@ -53,12 +52,26 @@ trait CanImportDict
             return;
         }
 
-        AdminDict::query()->insert([
-            'parent_id' => $this->getParentDictId($dict['parent'] ?? 0),
+        $parentId = AdminDict::query()->insertGetId([
             'key' => $dict['key'],
             'value' => $dict['value'],
             'extension' => $this->getName(),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
+        if (isset($dict['keys']) && count($dict['keys']) >= 1) {
+            AdminDict::query()->insert(collect($dict['keys'])->map(function ($item) use ($parentId, $dict) {
+                return [
+                    'parent_id' => $parentId,
+                    'key' => $dict['key'],
+                    'value' => $dict['value'],
+                    'extension' => $this->getName(),
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+            })->toArray());
+        }
+
     }
 
     /**
@@ -71,22 +84,6 @@ trait CanImportDict
         $this->flushDict();
 
         $this->addDict();
-    }
-
-    /**
-     * 根据名称获取菜单ID.
-     *
-     * @param int|string $parent
-     *
-     * @return int
-     */
-    protected function getParentDictId($parent)
-    {
-
-        return AdminDict::query()
-            ->where('key', $parent)
-            ->where('extension', $this->getName())
-            ->value('id') ?: 0;
     }
 
     /**
