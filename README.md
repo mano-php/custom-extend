@@ -99,4 +99,40 @@ use Illuminate\Support\Facades\Route;
 Route::any('/demo',function(){
     return ['msg'=>'HelloWorld'];
 });
+Route::get('/test',[ManoCode\FileSystem\Http\Controllers\DemoApiController::class,'test']);
+Route::get('/test1',[ManoCode\FileSystem\Http\Controllers\DemoApiController::class,'test1']);
+```
+
+
+#### 4. API逻辑交互 也提供了 json 返回的工具类 
+
+> 新建控制器，use ApiResponseTrait;即可通过$this 调用接口返回工具
+
+```php
+<?php
+
+namespace ManoCode\FileSystem\Http\Controllers;
+
+use Illuminate\Routing\Controller;
+use ManoCode\CustomExtend\Traits\ApiResponseTrait;
+
+/**
+ *
+ */
+class DemoApiController extends Controller
+{
+    use ApiResponseTrait;
+    public function test()
+    {
+        return $this->success('测试成功',[
+            'list'=>[]
+        ]);
+    }
+    public function test1()
+    {
+        return $this->fail('错误',[
+            'list'=>[]
+        ]);
+    }
+}
 ```
