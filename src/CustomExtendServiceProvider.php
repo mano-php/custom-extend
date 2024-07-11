@@ -29,6 +29,11 @@ class CustomExtendServiceProvider extends ServiceProvider
                     $table->string('extension')->nullable();
                 }
             });
+            Schema::table('admin_dict', function (Blueprint $table) {
+                if (!Schema::hasColumn('admin_dict', 'extension')) {
+                    $table->string('extension')->nullable();
+                }
+            });
         }catch (\Throwable $throwable){
 
         }
