@@ -49,11 +49,12 @@ trait CanImportPermission
             $lastOrder = $permissionModel::max('custom_order');
 
             $permissionModel::query()->insert([
-                'parent_id' => $this->getParentPermissionId($permission['parent'] ?? 0),
+                'parent_id' => intval($this->getParentPermissionId($permission['parent'] ?? 0)),
                 'custom_order' => $lastOrder + 1,
+                'name' => $permission['name'],
                 'slug' => $permission['slug'],
-                'http_method' => json_encode($permission['http_method']),
-                'http_path' => json_encode($permission['http_path']),
+                'http_method' => json_encode($permission['method']),
+                'http_path' => json_encode($permission['path']),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'extension' => $this->getName(),
