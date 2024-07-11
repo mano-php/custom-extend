@@ -97,7 +97,7 @@ trait CanImportDict
     }
 
     /**
-     * 验证菜单字段格式是否正确.
+     * 验证字典字段格式是否正确.
      *
      * @param array $dict
      *

@@ -77,10 +77,27 @@ class DemoServiceProvider extends ManoCodeServiceProvider
             ]
         ]
     ];
-	public function settingForm()
-	{
-	    return $this->basePage()->body([]);
-	}
+    protected $permission = [
+        [
+            'name'=>'测试权限',
+            'slug'=>'test',
+            'method'=>[],// 空则代表ANY
+            'path'=>[],// 授权接口
+            'parent'=>'',// 父级权限slug字段
+        ],
+        [
+            'name'=>'测试接口',
+            'slug'=>'test',
+            'method'=>[
+                'POST',
+                'GET',
+            ],// 空则代表ANY
+            'path'=>[
+                '/test/api*'
+            ],// 授权接口
+            'parent'=>'test',// 父级权限slug字段
+        ],
+    ];
 }
 ```
 

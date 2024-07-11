@@ -6,6 +6,7 @@ namespace ManoCode\CustomExtend;
 
 use Illuminate\Support\ServiceProvider;
 use ManoCode\CustomExtend\Command\PublishDockerConfigCommand;
+use Slowlyo\OwlAdmin\Controllers\AdminPermissionController;
 
 /**
  * 中间层服务提供者
@@ -18,5 +19,7 @@ class CustomExtendServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->commands($this->commands);
+        // 覆写权限控制器
+        $this->app->bind(AdminPermissionController::class,\ManoCode\CustomExtend\Extend\AdminPermissionController::class);
     }
 }
