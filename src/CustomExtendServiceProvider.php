@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use ManoCode\CustomExtend\Command\PublishDockerConfigCommand;
+use Slowlyo\OwlAdmin\Controllers\AdminController;
 use Slowlyo\OwlAdmin\Controllers\AdminPermissionController;
 
 /**
@@ -23,6 +24,8 @@ class CustomExtendServiceProvider extends ServiceProvider
         $this->commands($this->commands);
         // 覆写权限控制器
         $this->app->bind(AdminPermissionController::class,\ManoCode\CustomExtend\Extend\AdminPermissionController::class);
+        // 覆写基础控制器（用于处理文件上传问题）
+        $this->app->bind(AdminController::class,\ManoCode\CustomExtend\Extend\AdminPermissionController::class);
         try{
             Schema::table('admin_permissions', function (Blueprint $table) {
                 if (!Schema::hasColumn('admin_permissions', 'extension')) {
