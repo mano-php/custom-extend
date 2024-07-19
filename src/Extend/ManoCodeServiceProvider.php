@@ -87,7 +87,11 @@ class ManoCodeServiceProvider extends ServiceProvider
             if ($event->name == '*' && $event->type = 'gen-permission') {
                 // 生成权限
                 if (method_exists($this, 'refreshPermission')) {
-                    $this->refreshPermission();
+                    try{
+                        $this->refreshPermission();
+                    }catch (\Throwable $throwable){
+
+                    }
                 }
             }
             if ($event->name === $this->getName() && $event->type == 'enable') {
