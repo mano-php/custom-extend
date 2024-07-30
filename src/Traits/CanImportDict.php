@@ -63,8 +63,8 @@ trait CanImportDict
             AdminDict::query()->insert(collect($dict['keys'])->map(function ($item) use ($parentId, $dict) {
                 return [
                     'parent_id' => $parentId,
-                    'key' => $dict['key'],
-                    'value' => $dict['value'],
+                    'key' => $item['key'],
+                    'value' => $item['value'],
                     'extension' => $this->getName(),
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
