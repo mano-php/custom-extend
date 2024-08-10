@@ -47,12 +47,6 @@ trait CanImportMenu
 
             return;
         }
-        // 兼容处理 children
-        if(isset($menu['children']) && count($menu['children'])>=1){
-            $this->addMenu(array_merge($menu,[
-                'parent'=>$menu['title'],
-            ]));return;
-        }
 
         if (!$this->validateMenu($menu)) {
             return;
@@ -70,6 +64,13 @@ trait CanImportMenu
                 'url_type' => (string)($menu['url_type'] ?? 1),
                 'extension' => $this->getName(),
             ]);
+
+            // 兼容处理 children
+            if(isset($menu['children']) && count($menu['children'])>=1){
+                $this->addMenu(array_merge($menu,[
+                    'parent'=>$menu['title'],
+                ]));return;
+            }
         }
     }
 
