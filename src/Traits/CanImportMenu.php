@@ -47,6 +47,12 @@ trait CanImportMenu
 
             return;
         }
+        // 兼容处理 children
+        if(isset($menu['children']) && count($menu['children'])>=1){
+            $this->addMenu(array_merge($menu,[
+                'parent'=>$menu['title'],
+            ]));return;
+        }
 
         if (!$this->validateMenu($menu)) {
             return;
