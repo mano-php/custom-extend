@@ -3,7 +3,7 @@
     "alias": "ManoCode中间层",
     "description": "基于owl-admin和amis的底层自定义拓展",
     "type": "library",
-    "version": "git ",
+    "version": "v1.1.5",
     "keywords": ["extension"],
     "homepage": "https://github.com/mano-php/custom-extend",
     "license": "MIT",
