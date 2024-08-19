@@ -66,10 +66,14 @@ trait CanImportMenu
             ]);
 
             // 兼容处理 children
-            if(isset($menu['children']) && count($menu['children'])>=1){
-                $this->addMenu(array_merge($menu,[
-                    'parent'=>$menu['title'],
-                ]));return;
+            if (isset($menu['children']) && count($menu['children']) >= 1) {
+                foreach ($menu['children'] as $childrenMenu) {
+                    $this->addMenu(array_merge($childrenMenu, [
+                        'parent' => $menu['title'],
+                        'url' => rtrim($menu['url'], '/') . '/' . ltrim($childrenMenu['url'], '/'),
+                    ]));
+                }
+                return;
             }
         }
     }
