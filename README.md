@@ -165,13 +165,12 @@ class DemoApiController extends Controller
  * 根据指定选项生成一个动态的三元表达式字符串。
  *
  * @param string $name 变量名称，将用于表达式中作为条件变量。
- * @param array $options 选项数组，每个选项包含两个键：
- *                       - 'value': 需要与变量匹配的值
- *                       - 'color': 匹配成功时返回的颜色或状态值。颜色格式可以是 'active', 'inactive', 'error', 'success', 'processing', 'warning' 或具体色值。
+ * @param array $options 选项数组，其中键 (`key`) 代表需要与变量匹配的值，值 (`value`) 代表匹配成功时返回的颜色或状态值。
+ *                       颜色格式可以是 'active', 'inactive', 'error', 'success', 'processing', 'warning' 或具体色值。
  *                       例如：
  *                       [
- *                           ['value' => 'enable', 'color' => 'success'],
- *                           ['value' => 'disable', 'color' => 'error'],
+ *                           'enable' => 'success',
+ *                           'disable' => 'error',
  *                       ]
  * @return string 返回构建好的三元表达式字符串，格式为：
  *                 ${name=="value1"?"color1":(name=="value2"?"color2":"default")}
@@ -196,22 +195,5 @@ amis()->SelectControl('state', '状态')->options([
         'label' => '禁用',
         'value' => 'disable'
     ],
-])->type('tag')->set('color',setOptionsColor('state',[
-    [
-        'value'=>'1',
-        'color'=>'active'
-    ],
-    [
-        'value'=>'2',
-        'color'=>'inactive'
-    ],
-    [
-        'value'=>'enable',
-        'color'=>'success'
-    ],
-    [
-        'value'=>'disable',
-        'color'=>'error'
-    ],
-])),
+])->type('tag')->set('color',$this->setOptionsColor('state',['enable'=>'success','disable'=>'error'])),
 ```
