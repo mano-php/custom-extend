@@ -182,18 +182,9 @@ function setOptionsColor(string $name, array $options = []): string
 
 ##### 使用示例
 
-> 一般用于 状态字段的颜色选择，只需要提供字段名 颜色对照表即可使用
+> 一般用于 状态字段的颜色选择，只需要提供字段名 颜色对照表即可使用 `中文名称需要自行 在Service 完成调整`
 > 
 
 ```php
-amis()->SelectControl('state', '状态')->options([
-    [
-        'label' => '启用',
-        'value' => 'enable'
-    ],
-    [
-        'label' => '禁用',
-        'value' => 'disable'
-    ],
-])->type('tag')->set('color',$this->setOptionsColor('state',['enable'=>'success','disable'=>'error'])),
+amis()->TableColumn('state_title', '状态')->type('tag')->static()->set('color',$this->setOptionsColor('state',['enable'=>'success','disable'=>'error']))
 ```
