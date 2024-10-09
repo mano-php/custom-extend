@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use ManoCode\CustomExtend\Command\PublishDockerConfigCommand;
 use ManoCode\CustomExtend\Traits\AssetTraits;
 use Slowlyo\OwlAdmin\Controllers\AdminController;
+use ManoCode\CustomExtend\Extend\Menu;
 use Slowlyo\OwlAdmin\Controllers\AdminPermissionController;
 
 /**
@@ -27,6 +28,8 @@ class CustomExtendServiceProvider extends ServiceProvider
         $this->app->bind(AdminPermissionController::class,\ManoCode\CustomExtend\Extend\AdminPermissionController::class);
         // 覆写基础控制器（用于处理文件上传问题）
         $this->app->bind(AdminController::class,\ManoCode\CustomExtend\Extend\AdminPermissionController::class);
+        // 开发者工具问题
+        $this->app->bind('admin.menu',Menu::class);
         // 主题注入
         $this->app->singleton('admin.asset',AssetTraits::class);
         try{
