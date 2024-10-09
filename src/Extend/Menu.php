@@ -2,6 +2,8 @@
 
 namespace ManoCode\CustomExtend\Extend;
 use Slowlyo\OwlAdmin\Admin;
+use Slowlyo\OwlAdmin\Models\AdminRole;
+use Slowlyo\OwlAdmin\Models\AdminUser;
 
 /**
  *
@@ -32,7 +34,7 @@ class Menu extends \Slowlyo\OwlAdmin\Support\Cores\Menu
         }
 
         if (Admin::config('admin.show_development_tools')) {
-            if(admin_user()->slug ==='Administrator'){
+            if(in_array('Administrator',admin_user()->roles->pluck('name'))){
                 $extraMenus = array_merge($extraMenus, $this->devToolMenus());
             }
         }
