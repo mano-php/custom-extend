@@ -34,7 +34,7 @@ class Menu extends \Slowlyo\OwlAdmin\Support\Cores\Menu
         }
 
         if (Admin::config('admin.show_development_tools')) {
-            if(in_array('Administrator',admin_user()->roles->pluck('name'))){
+            if(in_array('Administrator',admin_user()->roles->pluck('name')?admin_user()->roles->pluck('name')->toArray():[])){
                 $extraMenus = array_merge($extraMenus, $this->devToolMenus());
             }
         }
