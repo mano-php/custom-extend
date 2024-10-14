@@ -158,33 +158,16 @@ class DemoApiController extends Controller
 
 #### 5. 公共函数库
 
-> 函数1 function setOptionsColor(string $name, array $options = []): string
-> 
+> 函数1 admin_user_role_check
+
 ```php
 /**
- * 根据指定选项生成一个动态的三元表达式字符串。
- *
- * @param string $name 变量名称，将用于表达式中作为条件变量。
- * @param array $options 选项数组，其中键 (`key`) 代表需要与变量匹配的值，值 (`value`) 代表匹配成功时返回的颜色或状态值。
- *                       颜色格式可以是 'active', 'inactive', 'error', 'success', 'processing', 'warning' 或具体色值。
- *                       例如：
- *                       [
- *                           'enable' => 'success',
- *                           'disable' => 'error',
- *                       ]
- * @return string 返回构建好的三元表达式字符串，格式为：
- *                 ${name=="value1"?"color1":(name=="value2"?"color2":"default")}
- *                 其中，'default' 是当所有条件不匹配时的默认值。
+ * 检查当前管理员用户 是否属于指定的角色
+ * @param string|array $role
+ * @return bool
  */
-function setOptionsColor(string $name, array $options = []): string
-
-```
-
-##### 使用示例
-
-> 一般用于 状态字段的颜色选择，只需要提供字段名 颜色对照表即可使用 `中文名称需要自行 在Service 完成调整`
-> 
-
-```php
-amis()->TableColumn('state_title', '状态')->type('tag')->static()->set('color',$this->setOptionsColor('state',['enable'=>'success','disable'=>'error']))
+function admin_user_role_check(string|array $role):bool;
+// 使用示例
+admin_user_role_check('Administrator');// 检查是否是 超级管理员
+admin_user_role_check(['Administrator','user-passs']);// 检查是否是 超级管理员 并且是 用户审核员
 ```
