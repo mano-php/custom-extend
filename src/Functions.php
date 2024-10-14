@@ -7,7 +7,7 @@ if (!function_exists('admin_user_role_check')) {
      */
     function admin_user_role_check(string|array $role)
     {
-        $adminUserRoles = admin_user()->roles->pluck('name');
+        $adminUserRoles = admin_user()->roles->pluck('slug');
         $adminUserRoles = $adminUserRoles ? $adminUserRoles->toArray() : [];
 
         if (is_array($role) && count($role) >= 1) {
@@ -15,6 +15,7 @@ if (!function_exists('admin_user_role_check')) {
             foreach ($role as $item) {
                 if (!in_array($item, $adminUserRoles)) {
                     $success = false;
+                    break;
                 }
             }
             return $success;
